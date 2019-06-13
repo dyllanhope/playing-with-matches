@@ -14,6 +14,8 @@ window.onload = function () {
     numberDisplay2.innerHTML = num2;
     num3 = getRandomInt();
     numberDisplay3.innerHTML = num3;
+
+    highlightMatching();
 };
 
 function getRandomInt() {

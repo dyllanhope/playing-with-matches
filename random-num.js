@@ -19,12 +19,7 @@ var numData = [];
 var rowData = [];
 
 randomiseBtn.addEventListener('click', function () {
-    numArray = [];
-
-    buildNumArray();
-    buildData();
-    buildNums();
-    buildRowData();
+    document.location.reload();
 });
 
 window.onload = function () {

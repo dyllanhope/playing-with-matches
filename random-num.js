@@ -19,15 +19,19 @@ var numData = [];
 var rowData = [];
 
 randomiseBtn.addEventListener('click', function () {
-    highlightMatching();
+    numArray = [];
+
+    buildNumArray();
     buildData();
     buildNums();
+    buildRowData();
 });
 
 window.onload = function () {
-    highlightMatching();
+    buildNumArray();
     buildData();
     buildNums();
+    buildRowData();
 
 };
 
@@ -37,7 +41,8 @@ function getRandomInt() {
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 };
 
-function highlightMatching() {
+function buildNumArray() {
+    var num;
     var found = false;
     var numsMatched = [0, 0];
     for (var i = 0; i < numArray.length; i++) {
@@ -50,12 +55,13 @@ function highlightMatching() {
                 if (x !== y) {
                     if (temp === numArray[i][y]) {
                         found = true;
+                        num = temp;
                     }
                 }
             }
         }
         if (found === true) {
-            rowData.push({ num: temp, row: i + 1 });
+            rowData.push({ num: num, row: i + 1 });
             found = false;
         }
     };
@@ -64,12 +70,10 @@ function highlightMatching() {
 
 function buildNums() {
     var numOptions = { numList: numData };
-    console.log(numData)
     var numHTML = template(numOptions);
     numDataTemp.innerHTML = numHTML;
 }
-function buildData() {
-    console.log(rowData)
+function buildRowData() {
     var rowOptions = { resultList: rowData };
     var rowHTML = messageTemp(rowOptions);
     messageData.innerHTML = rowHTML;
@@ -78,7 +82,7 @@ function buildData() {
 function buildData() {
     for (var x = 0; x < numArray.length; x++) {
         for (var y = 0; y < numArray[x].length; y++) {
-            numData.push({num: numArray[x][y]});
+            numData.push({ num: numArray[x][y] });
         }
     }
 }

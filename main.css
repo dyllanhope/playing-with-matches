@@ -1,0 +1,7 @@
+div.numberStyle{
+    font-size: 100px;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 105px;
+    text-align: center;
+}

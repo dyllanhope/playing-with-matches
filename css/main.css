@@ -1,19 +1,19 @@
 div.numberStyle{
     float: left;
-    margin: 10px;
-    font-size: 100px;
+    margin: 3px;
+    font-size: 90px;
     border: 1px solid black;
     border-radius: 5px;
-    width: 105px;
+    width: 95px;
     text-align: center;
 }
 div.highlight{
     float: left;
-    margin: 10px;
-    font-size: 100px;
-    border: 3px solid blue;
+    margin: 2px;
+    font-size: 90px;
+    border: 2px solid blue;
     border-radius: 5px;
-    width: 105px;
+    width: 95px;
     text-align: center;
 }
 .clearfix{

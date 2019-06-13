@@ -1,34 +1,32 @@
 var templateSource = document.querySelector(".numListTemplate").innerHTML;
+var messageSource = document.querySelector(".displayMessage").innerHTML;
 var template = Handlebars.compile(templateSource);
-var numData = document.querySelector(".numData");
+var messageTemp = Handlebars.compile(messageSource);
+var numDataTemp = document.querySelector(".numData");
+var messageData = document.querySelector(".messageData");
 var randomiseBtn = document.querySelector(".ranBtn");
 
 var message = document.querySelector(".displayMessage");
-var displayList = [
-    { item: 0, num: 0, style: 'numberStyle' },
-    { item: 1, num: 0, style: 'numberStyle' },
-    { item: 2, num: 0, style: 'numberStyle' }
-];
 
-randomiseBtn.addEventListener('click',function(){
-    resetStyles();
-    inputNums();
-    let numsfound = highlightMatching();
-    if (numsfound[0] !== 0 && numsfound[1] !== 0){
-        message.innerHTML = "We have " + numsfound[1] + " number " + numsfound[0]+ 's';
-    }else{
-        message.innerHTML = '';
-    }
+var numArray = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+var numData = [];
+
+var rowData = [];
+
+randomiseBtn.addEventListener('click', function () {
+    highlightMatching();
+    buildData();
     buildNums();
 });
 
 window.onload = function () {
-    resetStyles();
-    inputNums();
-    let numsfound = highlightMatching();
-    if (numsfound[0] !== 0 && numsfound[1] !== 0){
-        message.innerHTML = "We have " + numsfound[1] + " number " + numsfound[0];
-    }
+    highlightMatching();
+    buildData();
     buildNums();
 
 };
@@ -39,38 +37,48 @@ function getRandomInt() {
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 };
 
-function highlightMatching(first, second, third) {
-    var numsMatched = [0,0];
-    for (var i = 0; i < displayList.length; i++) {
-        var temp = displayList[i].num;
-        for (var z = 0; z < displayList.length; z++) {
-            if(i!==z){
-                if (temp === displayList[z].num){
-                    displayList[z].style = 'highlight';
-                    displayList[i].style = 'highlight';
-                    numsMatched[1]++;
-                    numsMatched[0] = temp;
+function highlightMatching() {
+    var found = false;
+    var numsMatched = [0, 0];
+    for (var i = 0; i < numArray.length; i++) {
+        for (var z = 0; z < numArray[i].length; z++) {
+            numArray[i][z] = getRandomInt();
+        }
+        for (var x = 0; x < numArray[i].length; x++) {
+            var temp = numArray[i][x];
+            for (var y = 0; y < numArray[i].length; y++) {
+                if (x !== y) {
+                    if (temp === numArray[i][y]) {
+                        found = true;
+                    }
                 }
             }
+        }
+        if (found === true) {
+            rowData.push({ num: temp, row: i + 1 });
+            found = false;
         }
     };
     return numsMatched;
 };
 
 function buildNums() {
-    var numOptions = { numList: displayList };
+    var numOptions = { numList: numData };
+    console.log(numData)
     var numHTML = template(numOptions);
-    numData.innerHTML = numHTML;
+    numDataTemp.innerHTML = numHTML;
 }
-function inputNums() {
-    for (var x = 0; x < displayList.length; x++) {
-        if (x === displayList[x].item) {
-            displayList[x].num = getRandomInt();
+function buildData() {
+    console.log(rowData)
+    var rowOptions = { resultList: rowData };
+    var rowHTML = messageTemp(rowOptions);
+    messageData.innerHTML = rowHTML;
+}
+
+function buildData() {
+    for (var x = 0; x < numArray.length; x++) {
+        for (var y = 0; y < numArray[x].length; y++) {
+            numData.push({num: numArray[x][y]});
         }
-    }
-}
-function resetStyles(){
-    for(var x=0;x<displayList.length;x++){
-        displayList[x].style="numberStyle";
     }
 }

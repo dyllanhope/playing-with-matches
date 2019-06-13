@@ -1,6 +1,7 @@
 var numberDisplay1 = document.querySelector(".numDisplay1");
 var numberDisplay2 = document.querySelector(".numDisplay2");
 var numberDisplay3 = document.querySelector(".numDisplay3");
+var message = document.querySelector(".displayMessage");
 
 window.onload = function () {
     var num1 = 0;
@@ -21,6 +22,10 @@ function getRandomInt() {
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 };
 
-function highlightMatching(first,second,third){
-    
+function highlightMatching(first, second, third) {
+    if (first === second && first === third) {
+        message.innerHTML = "All three of the numbers matched " + first + ", " + second + " and " + third;
+    }else if(first === second){
+        message.innerHTML = "2 numbers matched " +first + " and " + second;
+    }
 };

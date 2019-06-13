@@ -16,3 +16,7 @@ div.highlight{
     width: 105px;
     text-align: center;
 }
+.clearfix{
+    overflow: auto;
+    zoom: 1;
+}

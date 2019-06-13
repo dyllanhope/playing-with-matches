@@ -1,21 +1,36 @@
-var numberDisplay1 = document.querySelector(".numDisplay1");
-var numberDisplay2 = document.querySelector(".numDisplay2");
-var numberDisplay3 = document.querySelector(".numDisplay3");
+var templateSource = document.querySelector(".numListTemplate").innerHTML;
+var template = Handlebars.compile(templateSource);
+var numData = document.querySelector(".numData");
+var randomiseBtn = document.querySelector(".ranBtn");
+
 var message = document.querySelector(".displayMessage");
+var displayList = [
+    { item: 0, num: 0, style: 'numberStyle' },
+    { item: 1, num: 0, style: 'numberStyle' },
+    { item: 2, num: 0, style: 'numberStyle' }
+];
+
+randomiseBtn.addEventListener('click',function(){
+    resetStyles();
+    inputNums();
+    let numsfound = highlightMatching();
+    if (numsfound[0] !== 0 && numsfound[1] !== 0){
+        message.innerHTML = "We have " + numsfound[1] + " number " + numsfound[0]+ 's';
+    }else{
+        message.innerHTML = '';
+    }
+    buildNums();
+});
 
 window.onload = function () {
-    var num1 = 0;
-    var num2 = 0;
-    var num3 = 0;
+    resetStyles();
+    inputNums();
+    let numsfound = highlightMatching();
+    if (numsfound[0] !== 0 && numsfound[1] !== 0){
+        message.innerHTML = "We have " + numsfound[1] + " number " + numsfound[0];
+    }
+    buildNums();
 
-    num1 = getRandomInt();
-    numberDisplay1.innerHTML = num1;
-    num2 = getRandomInt();
-    numberDisplay2.innerHTML = num2;
-    num3 = getRandomInt();
-    numberDisplay3.innerHTML = num3;
-
-    highlightMatching();
 };
 
 function getRandomInt() {
@@ -25,9 +40,37 @@ function getRandomInt() {
 };
 
 function highlightMatching(first, second, third) {
-    if (first === second && first === third) {
-        message.innerHTML = "All three of the numbers matched " + first + ", " + second + " and " + third;
-    }else if(first === second){
-        message.innerHTML = "2 numbers matched " +first + " and " + second;
-    }
+    var numsMatched = [0,0];
+    for (var i = 0; i < displayList.length; i++) {
+        var temp = displayList[i].num;
+        for (var z = 0; z < displayList.length; z++) {
+            if(i!==z){
+                if (temp === displayList[z].num){
+                    displayList[z].style = 'highlight';
+                    displayList[i].style = 'highlight';
+                    numsMatched[1]++;
+                    numsMatched[0] = temp;
+                }
+            }
+        }
+    };
+    return numsMatched;
 };
+
+function buildNums() {
+    var numOptions = { numList: displayList };
+    var numHTML = template(numOptions);
+    numData.innerHTML = numHTML;
+}
+function inputNums() {
+    for (var x = 0; x < displayList.length; x++) {
+        if (x === displayList[x].item) {
+            displayList[x].num = getRandomInt();
+        }
+    }
+}
+function resetStyles(){
+    for(var x=0;x<displayList.length;x++){
+        displayList[x].style="numberStyle";
+    }
+}

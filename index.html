@@ -6,22 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script type="text/template" class="numListTemplate">
+        {{#each numList}}
+        <div class="{{style}}">{{num}}</div>
+        {{/each}}
+    </script>
     <title>Matches</title>
 </head>
 
 <body>
-    <div>
-        <div class="numberStyle numDisplay1">
-            4
+    <div class="clearfix">
+        <div class="numData">
+
         </div>
-        <div class="numberStyle numDisplay2">
-            6
-        </div>
-        <div class="numberStyle numDisplay3">
-            3
-        </div>
+        <button class="ranBtn">Randomize</button>
     </div>
-    <div>
+    <div class="clearfix">
         <label for="whoever" class="displayMessage"></label>
     </div>
     <script src="random-num.js"></script>
